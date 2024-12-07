@@ -30,7 +30,7 @@ function Home() {
   return (
     <>
       <section className="home">
-        <div className="container home__container">
+        <div className=" home__container container">
           <div className="hero__info">
             <h1>We are changing the way people shop</h1>
             <p>
@@ -41,36 +41,44 @@ function Home() {
             <Link to="/products">OUR PRODUCTS</Link>
           </div>
           <div className="slide-images">
-            <img src={slideimg1} alt="" width="320" height="416" />
-            <img src={slideimg2} alt="" width="300" height="416" />
+            <div className="slideimg1">
+              <img src={slideimg1} alt="" />
+            </div>
+            <div className="slideimg2">
+              <img src={slideimg2} alt="" />
+            </div>
           </div>
         </div>
       </section>
       <div className="container">
+        <h3 className="featured-title">Featured Products</h3>
+        <div className="line"></div>
         <div className="card-wrapper card-wraps">
-          {products.slice(0, 3).map((product, index) => {
-            return (
-              <div
-                className="card"
-                key={index}
-                onClick={() => {
-                  handleRedirect(product.id);
-                }}
-              >
-                <div className="card-image">
-                  <img
-                    className="card-pic"
-                    src={product.attributes.image}
-                    alt=""
-                  />
+          {products
+            .filter((product) => product.attributes.featured == true)
+            .map((product, index) => {
+              return (
+                <div
+                  className="card"
+                  key={index}
+                  onClick={() => {
+                    handleRedirect(product.id);
+                  }}
+                >
+                  <div className="card-image">
+                    <img
+                      className="card-pic"
+                      src={product.attributes.image}
+                      alt=""
+                    />
+                  </div>
+                  <div className="card-info">
+                    <h3>{product.attributes.title}</h3>
+                    <p>${product.attributes.price}</p>
+                  </div>
                 </div>
-                <div className="card-info">
-                  <h3>{product.attributes.title}</h3>
-                  <p>${product.attributes.price}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </>

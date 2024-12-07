@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./index.css";
 function Mainlayout({ children }) {
   return (
@@ -20,22 +20,24 @@ function Mainlayout({ children }) {
           <nav className="sitenav">
             <ul className="sitenav__list">
               <li className="sitenav__item">
-                <Link className="sitenav__link " to="/">
+                <NavLink className="sitenav__link " to="/">
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className="sitenav__item">
-                <Link className="sitenav__link" to="/about">
+                <NavLink className="sitenav__link" to="/about">
                   About
-                </Link>
+                </NavLink>
               </li>
               <li className="sitenav__item">
-                <Link className="sitenav__link" to="/products">
+                <NavLink className="sitenav__link" to="/products">
                   Products
-                </Link>
+                </NavLink>
               </li>
               <li className="sitenav__item">
-                <Link className="sitenav__link">Cart</Link>
+                <NavLink className="sitenav__link" to="/cart">
+                  Cart
+                </NavLink>
               </li>
             </ul>
           </nav>

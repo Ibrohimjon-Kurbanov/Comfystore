@@ -8,18 +8,20 @@
   justify-content: space-between;
 }
 .slide-images {
-  width: 100%;
-  max-width: 496px;
-  display: flex;
-  align-items: center;
+  width: 444px;
   padding: 16px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   gap: 16px;
   background-color: #021431;
   border-radius: 10px;
 }
-.slide-images img {
-  border-radius: 15px;
+.slideimg1 img,
+.slideimg2 img {
+  width: 320px;
+  height: 416px;
+  border-radius: 10px;
 }
 .hero__info {
   width: 496px;
@@ -51,5 +53,15 @@
   text-transform: uppercase;
 }
 .card-wraps {
+  margin-top: 50px;
   margin-bottom: 50px;
+}
+.featured-title {
+  font-size: 3rem;
+  color: #394e6a;
+  margin-bottom: 24px;
+}
+.line {
+  border-bottom: 1px solid #394e6a;
+  opacity: 0.2;
 }

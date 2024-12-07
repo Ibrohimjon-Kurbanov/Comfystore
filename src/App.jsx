@@ -6,6 +6,7 @@ import Products from "./pages/Products";
 import Mainlayout from "./layout/Mainlayout";
 import ProductsDetails from "./pages/ProductsDetails";
 import ErrorPage from "./pages/ErrorPage";
+import Cart from "./pages/Cart";
 function App() {
   return (
     <div>
@@ -39,6 +40,14 @@ function App() {
           element={
             <Mainlayout>
               <ProductsDetails></ProductsDetails>
+            </Mainlayout>
+          }
+        ></Route>
+        <Route
+          path="/cart"
+          element={
+            <Mainlayout>
+              <Cart></Cart>
             </Mainlayout>
           }
         ></Route>

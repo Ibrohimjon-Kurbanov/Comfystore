@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 1.6rem;
   align-items: center;
+  margin-bottom: 50px;
 }
 .card {
   width: 352px;
@@ -101,6 +102,7 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 .form-box-2 span {
   font-size: 13.5px;

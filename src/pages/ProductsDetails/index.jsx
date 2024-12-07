@@ -3,32 +3,42 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 function ProductDetails() {
   const [product, setProduct] = useState({});
+  const [selectedColor, setSelectedColor] = useState("");
+
   const { id } = useParams();
+
+  const handleColorChange = (color) => {
+    setSelectedColor(color);
+  };
+
   useEffect(() => {
     axios
       .get(`https://strapi-store-server.onrender.com/api/products/${id}`)
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setProduct(response.data.data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
+
   return (
     <div>
       <div className="container">
         <div className="product-details">
+          <div className="links">
+            <Link to="/">Home</Link>
+            <span>&gt;</span>
+            <Link to="/products">Products</Link>
+          </div>
           {product.id && (
             <div className="product-card">
               <div className="product-image">
-                <div className="links">
-                  <Link to="/">Home</Link>
-                  <Link to="/products">Products</Link>
-                </div>
                 <img
                   src={product.attributes.image}
                   alt=""
@@ -47,19 +57,37 @@ function ProductDetails() {
                 <div className="colors">
                   {product.attributes &&
                     product.attributes.colors.map((color, index) => (
-                      <span
+                      <label
                         key={index}
                         style={{
-                          backgroundColor: color,
                           display: "inline-block",
-                          width: "24px",
-                          height: "24px",
-                          borderRadius: "50%",
                           marginRight: "8px",
+                          marginBottom: "15px",
                           cursor: "pointer",
-                          marginBottom: "10px",
                         }}
-                      ></span>
+                      >
+                        <input
+                          type="radio"
+                          name="color"
+                          value={color}
+                          onChange={() => handleColorChange(color)}
+                          checked={selectedColor === color}
+                          style={{ display: "none" }}
+                        />
+                        <span
+                          style={{
+                            backgroundColor: color,
+                            display: "inline-block",
+                            width: "24px",
+                            height: "24px",
+                            borderRadius: "50%",
+                            border:
+                              selectedColor === color
+                                ? "2px solid #333"
+                                : "2px solid transparent",
+                          }}
+                        ></span>
+                      </label>
                     ))}
                 </div>
                 <h4>Amount</h4>
@@ -84,4 +112,5 @@ function ProductDetails() {
     </div>
   );
 }
+
 export default ProductDetails;
