@@ -7,11 +7,31 @@ import axios from "axios";
 function ProductDetails() {
   const [product, setProduct] = useState({});
   const [selectedColor, setSelectedColor] = useState("");
-
+  const [amount, setAmount] = useState();
   const { id } = useParams();
-
   const handleColorChange = (color) => {
     setSelectedColor(color);
+  };
+
+  const handleAddCart = () => {
+    if (!selectedColor) {
+      alert("Please choose color");
+      return;
+    }
+
+    const cartItem = {
+      title: product.attributes.title,
+      company: product.attributes.company,
+      price: product.attributes.price,
+      color: selectedColor,
+      image: product.attributes.image,
+      amount: Number(amount),
+    };
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    localStorage.setItem("cart", JSON.stringify([...cart, cartItem]));
+
+    alert("Item added to cart");
   };
 
   useEffect(() => {
@@ -25,7 +45,7 @@ function ProductDetails() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -42,8 +62,8 @@ function ProductDetails() {
                 <img
                   src={product.attributes.image}
                   alt=""
+                  className="w-[511px] h-[384px]"
                   width="511"
-                  height="384"
                 />
               </div>
               <div className="products-card-info">
@@ -91,7 +111,12 @@ function ProductDetails() {
                     ))}
                 </div>
                 <h4>Amount</h4>
-                <select name="" id="">
+                <select
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}
+                >
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -103,7 +128,9 @@ function ProductDetails() {
                   <option value="9">9</option>
                   <option value="10">10</option>
                 </select>
-                <button className="products-add-btn">ADD TO BAG</button>
+                <button className="products-add-btn" onClick={handleAddCart}>
+                  ADD TO BAG
+                </button>
               </div>
             </div>
           )}

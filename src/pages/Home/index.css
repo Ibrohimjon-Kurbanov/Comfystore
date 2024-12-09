@@ -17,12 +17,7 @@
   background-color: #021431;
   border-radius: 10px;
 }
-.slideimg1 img,
-.slideimg2 img {
-  width: 320px;
-  height: 416px;
-  border-radius: 10px;
-}
+
 .hero__info {
   width: 496px;
 }
@@ -56,10 +51,11 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
-.featured-title {
+.title {
   font-size: 3rem;
   color: #394e6a;
   margin-bottom: 24px;
+  letter-spacing: 1px;
 }
 .line {
   border-bottom: 1px solid #394e6a;

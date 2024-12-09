@@ -41,17 +41,21 @@ function Home() {
             <Link to="/products">OUR PRODUCTS</Link>
           </div>
           <div className="slide-images">
-            <div className="slideimg1">
-              <img src={slideimg1} alt="" />
-            </div>
-            <div className="slideimg2">
-              <img src={slideimg2} alt="" />
-            </div>
+            <img
+              className="w-[320px] h-[416px] rounded-3xl"
+              src={slideimg1}
+              alt=""
+            />
+            <img
+              className="w-[320px] h-[416px] rounded-3xl"
+              src={slideimg2}
+              alt=""
+            />
           </div>
         </div>
       </section>
       <div className="container">
-        <h3 className="featured-title">Featured Products</h3>
+        <h3 className="title">Featured Products</h3>
         <div className="line"></div>
         <div className="card-wrapper card-wraps">
           {products

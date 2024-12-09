@@ -1,6 +1,6 @@
 import "./index.css";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Products() {
@@ -12,12 +12,16 @@ function Products() {
   const [price, setPrice] = useState(1000);
   const [shipping, setShipping] = useState(false);
   const [filterData, setFilterData] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const navigate2 = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     axios
-      .get("https://strapi-store-server.onrender.com/api/products")
+      .get(
+        `https://strapi-store-server.onrender.com/api/products?page=${currentPage}`
+      )
       .then((response) => {
         if (response.status === 200) {
           console.log(response.data.data);
@@ -28,7 +32,10 @@ function Products() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+    if (location.search) {
+      setCurrentPage(location.search.substring(6));
+    }
+  }, [currentPage]);
 
   const handleRedirect = (id) => {
     navigate(`/products/${id}`);
@@ -57,11 +64,11 @@ function Products() {
       );
     }
 
-    if (sort === "high") {
+    if (sort == "high") {
       filteredData.sort((a, b) => b.attributes.price - a.attributes.price);
     }
 
-    if (sort === "low") {
+    if (sort == "low") {
       filteredData.sort((a, b) => a.attributes.price - b.attributes.price);
     }
 
@@ -88,6 +95,30 @@ function Products() {
     setPrice(1000);
     setShipping(false);
     setFilterData(products);
+  }
+
+  function handlePagination(num) {
+    navigate2(`/products?page=${num}`);
+    setCurrentPage(num);
+  }
+
+  function handlePrev() {
+    if (currentPage > 1) {
+      setCurrentPage((currentPage) => currentPage - 1);
+      navigate2(`/products?page=${currentPage - 1}`);
+    } else {
+      setCurrentPage(1);
+      navigate2(`/products?page=1`);
+    }
+  }
+  function handleNext() {
+    if (currentPage < 3) {
+      setCurrentPage((currentPage) => currentPage + 1);
+      navigate2(`/products?page=${Number(currentPage) + 1}`);
+    } else {
+      setCurrentPage(3);
+      navigate2(`/products?page=3`);
+    }
   }
 
   return (
@@ -229,6 +260,52 @@ function Products() {
                 </div>
               );
             })}
+        </div>
+        <div className="flex justify-end mb-[100px]">
+          <div className="join">
+            <button
+              className="join-item btn h-16 text-2xl font-normal "
+              onClick={handlePrev}
+            >
+              PREV
+            </button>
+            <button
+              className={`join-item btn w-20 h-16 text-2xl  ${
+                currentPage == 1 ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                handlePagination(1);
+              }}
+            >
+              1
+            </button>
+            <button
+              className={`join-item btn  w-20 h-16 text-2xl ${
+                currentPage == 2 ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                handlePagination(2);
+              }}
+            >
+              2
+            </button>
+            <button
+              className={`join-item btn w-20 h-16 text-2xl ${
+                currentPage === 3 ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                handlePagination(3);
+              }}
+            >
+              3
+            </button>
+            <button
+              className={"join-item btn  h-16 text-2xl font-normal"}
+              onClick={handleNext}
+            >
+              NEXT
+            </button>
+          </div>
         </div>
       </div>
     </>
